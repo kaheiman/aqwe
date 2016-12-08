@@ -1,0 +1,36 @@
+<h2 class="page-header">Create MC Question</h2>
+<div class="alert alert-danger" ng-if = "vm.warm_register">{{vm.warm_msg}}</div>
+<div class="alert alert-success" ng-if = "vm.success_register">{{vm.warm_msg}}</div>
+<div class="form-group">
+  <label>Title</label>
+  <input type="text" class="form-control" placeholder="Title" name="username" ng-model="vm.title">
+</div>
+ <div class="form-group">
+  <label>Tag</label>
+  <input class="form-control" placeholder="Tag" name="tag" ng-model = "vm.tag">
+</div>
+<div class="form-group">
+  <label>Question</label>
+  <input type="text" class="form-control" placeholder="Question" ng-model = "vm.question">
+</div>
+<div class="form-group">
+  <label>Choice A</label>
+  <input type="text" class="form-control" placeholder="Choice A" ng-model = "vm.choice1">
+</div>
+<div class="form-group">
+  <label>Choice B</label>
+  <input type="text" class="form-control" placeholder="Choice B" ng-model = "vm.choice2">
+</div>
+<div class="form-group">
+  <label>Choice C</label>
+  <input type="text" class="form-control" placeholder="Choice C" ng-model = "vm.choice3">
+</div>
+<div class="form-group">
+  <label>Choice D</label>
+  <input type="text" class="form-control" placeholder="Choice D" ng-model = "vm.choice4">
+</div>
+<div class="form-group">
+  <label>Explaination</label>
+  <input type="text" class="form-control" placeholder="Explaination" ng-model = "vm.explain">
+</div>
+<button type="submit" class="btn btn-default" ng-click="vm.create()">Create</button>

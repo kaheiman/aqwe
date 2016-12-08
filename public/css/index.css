@@ -1,0 +1,75 @@
+/* You should not need to study the CSS code in this file for problem 2 */
+body { padding: 15px; }
+
+.nav.nav-pills {
+  margin-left: 30px;
+}
+
+.nav-pills>li.active>a {
+  background-color: #4f6275 !important;
+  border-radius: 20px;
+  font-size:18px;
+  padding: 5px 10px;
+} 
+
+.glyphicon.glyphicon-search{
+  font-size: 20px;
+  color: #4f6275 !important;
+  padding-top: 5px;
+  margin-left: 30px;
+  padding-right: 10px;
+}
+
+#medialeft {
+  border: solid 1px;
+  padding: 2px;
+  text-align: center;
+  color: green;
+}
+#medialeftparent{
+  margin-left: 40px;
+    border: solid 1px;
+  padding: 2px;
+  text-align: center;
+  color: #009688;
+}
+
+#mediabody{
+  margin-left: 20px;
+}
+
+.media-heading span:hover{
+  color: #009688;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.glyphicon.glyphicon-tag{
+  color: #4f6275 !important;
+  font-size: 17px;
+  padding-right: 5px;
+}
+
+#tag{
+  background-color: pink;
+  display: inline-block;
+  margin-left: 10px;
+  padding: 2px;
+  border-radius: 4px;
+  font-weight: 400;
+}
+
+#circle{
+  border-radius: 50%;
+  border: solid 1px;
+  padding: 3px;
+  font-size: 10px;
+  margin-left: 40px;
+  margin-top: 10px;
+}
+.media-left div:hover{
+  background-color: red;
+  cursor: pointer;
+  opacity: 0.5;
+  color: white;
+}
