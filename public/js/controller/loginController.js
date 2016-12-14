@@ -13,6 +13,7 @@ app.controller('loginController', ['$scope', '$location', '$rootScope', 'account
       function register(){
 		vm.warm_register = false;
 		vm.success_register = false;
+		var letterNumber = /^[0-9a-zA-Z]+$/;
 		console.log(vm.email);
 		console.log(vm.password);
 		console.log(vm.password2);
@@ -20,6 +21,10 @@ app.controller('loginController', ['$scope', '$location', '$rootScope', 'account
 		if(!vm.password || !vm.password2 || !vm.username || !vm.email ){
 			vm.warm_msg = "Please fill in all the boxes!";
 			vm.warm_register = true;			
+		}
+		else if(vm.username.length > 12 || !vm.username.match(letterNumber)){ 
+			vm.warm_msg = "Username should contain at most 12 alphanumeric characters!";
+			vm.warm_register = true;
 		}
 		//check password
 		else if(vm.password !== vm.password2){
@@ -60,7 +65,8 @@ app.controller('loginController', ['$scope', '$location', '$rootScope', 'account
 		accountService.login(data)
 			.success(function(user){
 				console.log(user);
-				$scope.$emit('changeAuth',{ auth: true, username: user.username});
+				$scope.$emit('changeAuth',{ auth: true, user: user});
+				$location.url('/myMc');
 
 			})
 			.error(function(err){

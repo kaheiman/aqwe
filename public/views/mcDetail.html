@@ -1,0 +1,21 @@
+<div class="jumbotron">
+  <div id = "question">
+    <h3>Question:  {{mcDetail.question}}</h3>
+    <div id = "mcbox"><div id = "circle">A </div><span>{{mcDetail.choiceA}}</span></div>
+    <div id = "mcbox"><div id = "circle">B </div>{{mcDetail.choiceB}}</div>
+    <div id = "mcbox"><div id = "circle">C </div>{{mcDetail.choiceC}}</div>
+    <div id = "mcbox"><div id = "circle">D </div>{{mcDetail.choiceD}}</div>
+    <br>
+    <br>
+     <div class="btn-group">
+      <button type="button" class="btn btn-danger">Answer & Explaination</button>
+      <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="caret"></span>
+        <span class="sr-only">Toggle Dropdown</span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a href="#">Answer: {{mcDetail.ans}}<br>Explaination: {{mcDetail.description}}</a></li>
+      </ul>
+    </div> 
+  </div>
+</div>

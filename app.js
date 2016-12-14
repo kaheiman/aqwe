@@ -18,6 +18,10 @@ var path = require('path');
 var User = require('./models/user.model.js');
 var Register = require('./models/register.model.js');
 var McSchema = require('./models/mc.model.js');
+var ObjectId = require('mongoose').Types.ObjectId; 
+var json2csv = require('json2csv');
+var fs = require('fs');
+
 
 var routes = require('./route/index.js');
 //var account = require('./route/api.account.route.js');
@@ -35,7 +39,8 @@ app.use(session({
     secret: 'secret',
     saveUninitialized: true,
     //your store sets an expiration date on stored sessions, set resave as true
-    resave: true
+    resave: true,
+    cookie: {}
 }));
 
 // Passport init
@@ -50,7 +55,7 @@ app.use(multipartyMiddleware);
 
 //route
 var apiRouter = express.Router();
-require('./route/api.account.route.js')(apiRouter, bodyParser, passport, User, Register, McSchema);
+require('./route/api.account.route.js')(apiRouter, bodyParser, passport, User, Register, McSchema, ObjectId, json2csv, fs);
 app.use('/api', apiRouter);
 
 app.use('/', routes);

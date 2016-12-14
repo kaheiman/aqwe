@@ -5,22 +5,29 @@ utilityService.$inject = [];
 function utilityService($scope) {
 
 	var username = "";
-	var auth = false;
+	var auth = "";
+	var mcDetail = "";
 	console.log("fuck fuk");
 	var service = {
 		setAuth : setAuth,
-		getAuth	: getAuth
+		getAuth	: getAuth,
+		setMcDetail: setMcDetail,
+		getMcDetail: getMcDetail
 	};
 	return service;
 
-	function setAuth(name){
-		username = name;
-		auth = true;
-		console.log("service called");
+	function setAuth(user){
+		auth = user;
+		console.log("service called", user);
 	}
 
 	function getAuth(){
-		return {auth: auth, username: username};
+		return auth;
 	}
-
+	function setMcDetail(mcInfo){
+		mcDetail = mcInfo;
+	}
+	function getMcDetail(){
+		return mcDetail;
+	}
 }

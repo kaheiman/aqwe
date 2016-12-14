@@ -2,8 +2,8 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var McSchema = Schema({
-    //creator: { type: Schema.Types.ObjectId, ref: 'User' },
-    //ownername: { type: String, ref: 'User' },
+    creator: { type: Schema.Types.ObjectId, ref: 'User' },
+    ownername: { type: String, ref: 'User' },
     title: {
         type:String,
         required: true,
@@ -19,7 +19,7 @@ var McSchema = Schema({
     choiceC:{ type: String, default:''},
     choiceD:{ type: String, default:''},
     launched:{ type:Boolean, default: false},
-    explain:{ type: String, default: ''},
+    description:{ type: String, default: ''},
     ans:{ type: String, enum: ['a', 'b', 'c', 'd'], default: 'a'},
     tags: [{ type:String, default: ''}],
     popularity: {

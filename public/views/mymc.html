@@ -1,36 +1,131 @@
-<h2 class="page-header">Create MC Question</h2>
-<div class="alert alert-danger" ng-if = "vm.warm_register">{{vm.warm_msg}}</div>
-<div class="alert alert-success" ng-if = "vm.success_register">{{vm.warm_msg}}</div>
-<div class="form-group">
-  <label>Title</label>
-  <input type="text" class="form-control" placeholder="Title" name="username" ng-model="vm.title">
-</div>
- <div class="form-group">
-  <label>Tag</label>
-  <input class="form-control" placeholder="Tag" name="tag" ng-model = "vm.tag">
-</div>
-<div class="form-group">
-  <label>Question</label>
-  <input type="text" class="form-control" placeholder="Question" ng-model = "vm.question">
-</div>
-<div class="form-group">
-  <label>Choice A</label>
-  <input type="text" class="form-control" placeholder="Choice A" ng-model = "vm.choice1">
-</div>
-<div class="form-group">
-  <label>Choice B</label>
-  <input type="text" class="form-control" placeholder="Choice B" ng-model = "vm.choice2">
-</div>
-<div class="form-group">
-  <label>Choice C</label>
-  <input type="text" class="form-control" placeholder="Choice C" ng-model = "vm.choice3">
-</div>
-<div class="form-group">
-  <label>Choice D</label>
-  <input type="text" class="form-control" placeholder="Choice D" ng-model = "vm.choice4">
-</div>
-<div class="form-group">
-  <label>Explaination</label>
-  <input type="text" class="form-control" placeholder="Explaination" ng-model = "vm.explain">
-</div>
-<button type="submit" class="btn btn-default" ng-click="vm.create()">Create</button>
+<h1 class="page-header" ng-click="showCreate = !showCreate" ng-init = "showCreate = false">Create MC Question <span class = "glyphicon glyphicon-plus" ng-show = "!showCreate"></span><span class = "glyphicon glyphicon-minus" ng-show = "showCreate"></span></h2>
+  <div ng-show = "(vm.warm_register != null || vm.success_register != null)">
+    <div class="alert alert-danger" ng-if = "vm.warm_register">{{vm.warm_msg}}</div>
+    <div class="alert alert-success" ng-if = "vm.success_register">{{vm.warm_msg}}</div>
+  </div>
+  <div ng-show = "showCreate">
+    <div class="form-group">
+      <label>Title</label>
+      <input type="text" class="form-control" placeholder="Title" name="username" ng-model="vm.title">
+    </div>
+     <div class="form-group">
+      <label>Tag</label>
+      <input class="form-control" placeholder="Tag" name="tag" ng-model = "vm.tag">
+    </div>
+    <div class="form-group">
+      <label>Question</label>
+      <input type="text" class="form-control" placeholder="Question" ng-model = "vm.question">
+    </div>
+    <div class="form-group">
+      <label>Choice A</label>
+      <input type="text" class="form-control" placeholder="Choice A" ng-model = "vm.choice1">
+    </div>
+    <div class="form-group">
+      <label>Choice B</label>
+      <input type="text" class="form-control" placeholder="Choice B" ng-model = "vm.choice2">
+    </div>
+    <div class="form-group">
+      <label>Choice C</label>
+      <input type="text" class="form-control" placeholder="Choice C" ng-model = "vm.choice3">
+    </div>
+    <div class="form-group">
+      <label>Choice D</label>
+      <input type="text" class="form-control" placeholder="Choice D" ng-model = "vm.choice4">
+    </div>
+    <div class="form-group">
+      <label>Explaination</label>
+      <input type="text" class="form-control" placeholder="Explaination" ng-model = "vm.description">
+    </div>
+    <button type="submit" class="btn btn-default" ng-click="vm.create()">Create</button>
+  </div>
+
+<uib-accordion close-others="oneAtATime" ng-repeat = "mc in vm.mymcs">
+    <div uib-accordion-group class="panel-default" >
+      <uib-accordion-heading>
+        {{mc.title}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isCustomHeaderOpen, 'glyphicon-chevron-right': !status.isCustomHeaderOpen}"></i>
+      </uib-accordion-heading>
+      <div id = "userFunction">
+        <span class = "glyphicon glyphicon-edit" ng-click = "vm.edit($index)"></span>
+        <span class = "glyphicon glyphicon-trash" ng-click = "vm.deletes($index)"></span>
+        <span class = "glyphicon glyphicon-share" ng-click = "vm.launched($index)" ng-show="!mc.launched"></span>
+        <span class = "glyphicon glyphicon-import" ng-click = "vm.retrieve($index)" ng-show="mc.launched"></span>        
+      </div>
+      <div id = "editMc">
+        Question: {{mc.question}}<br>
+        Choice A: {{mc.choiceA}}<br>
+        Choice B: {{mc.choiceB}}<br>
+        Choice C: {{mc.choiceC}}<br>
+        Choice D: {{mc.choiceD}}<br>
+        Answer: {{mc.ans}}<br>
+        Explain: {{mc.explain}}<br>
+      </div>
+      <form name="outerForm" class="tab-form-demo">
+        <uib-tabset active="activeForm">
+          <uib-tab index="0" heading="Question">
+            <ng-form name="nestedForm">
+              <div class="form-group">
+                <label>Question</label>
+                <input type="text" class="form-control" required ng-model="vm.mymcs[$index].question"/>
+              </div>
+            </ng-form>
+          </uib-tab>
+          <uib-tab index="1" heading="Choice A">
+            <ng-form name="nestedForm">
+              <div class="form-group">
+                <label>Choice A</label>
+                <input type="text" class="form-control" required ng-model="vm.mymcs[$index].choiceA"/>
+              </div>
+            </ng-form>
+          </uib-tab>
+          <uib-tab index="2" heading="Choice B">
+            <ng-form name="nestedForm">
+              <div class="form-group">
+                <label>Choice B</label>
+                <input type="text" class="form-control" required ng-model="vm.mymcs[$index].choiceB"/>
+              </div>
+            </ng-form>
+          </uib-tab>
+          <uib-tab index="3" heading="Choice C">
+            <ng-form name="nestedForm">
+              <div class="form-group">
+                <label>Choice C</label>
+                <input type="text" class="form-control" required ng-model="vm.mymcs[$index].choiceC"/>
+              </div>
+            </ng-form>
+          </uib-tab> 
+          <uib-tab index="4" heading="Choice D">
+            <ng-form name="nestedForm">
+              <div class="form-group">
+                <label>Choice D</label>
+                <input type="text" class="form-control" required ng-model="vm.mymcs[$index].choiceD"/>
+              </div>
+            </ng-form>
+          </uib-tab> 
+          <uib-tab index="5" heading="Answer">
+            <ng-form name="nestedForm">
+              <div class="form-group">
+                <label>Answer</label>
+                <input type="text" class="form-control" required ng-model="vm.mymcs[$index].ans"/>
+              </div>
+            </ng-form>
+          </uib-tab> 
+          <uib-tab index="6" heading="Explain">
+            <ng-form name="nestedForm">
+              <div class="form-group">
+                <label>Explain</label>
+                <input type="text" class="form-control" required ng-model="vm.mymcs[$index].explain"/>
+              </div>
+            </ng-form>
+          </uib-tab>     
+          <uib-tab index="7" heading="Title">
+            <ng-form name="nestedForm">
+              <div class="form-group">
+                <label>Title</label>
+                <input type="text" class="form-control" required ng-model="vm.mymcs[$index].title"/>
+              </div>
+            </ng-form>
+          </uib-tab>                                                                  
+        </uib-tabset>
+      </form>     
+    </div>
+</uib-accordion>

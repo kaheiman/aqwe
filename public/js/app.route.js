@@ -17,6 +17,18 @@ var app = angular.module('routerRoutes', ['ngRoute'])
 				controller: 'mcController',
 				controllerAs: 'vm'				
 			}).
+			when('/explore', {
+				templateUrl: '/views/explore.html',
+				controller: 'mainController'
+			}).
+			when('/mcDetail/:id', {
+				templateUrl: '/views/mcDetail.html',
+				controller: 'mainController'				
+			}).
+			when('/about', {
+				templateUrl: 'views/about.html',
+				controller: 'mainController'
+			}).
 			otherwise({
 				redirectTo: '/' 
 			});

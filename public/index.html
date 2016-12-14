@@ -11,6 +11,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js" type="text/javascript"></script>
 <script src= "./css/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script src="./bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 <script type="text/javascript" src="./js/app.route.js"></script>
 <script src="./js/main.js"></script>
 <script type="text/javascript" src="./js/controller/loginController.js"></script>
@@ -33,16 +34,16 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Explore</a></li>
-            <li><a href="/myMc">My Mc</a></li>
+            <li><a href="/about" ng-click = "fistShow = false">About</a></li>
+            <li><a href="/explore" ng-click = "fistShow = false">Explore</a></li>
+            <li><a href="/myMc" ng-if = "isAuth.auth" ng-click = "fistShow = false">My Mc</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="/login" ng-show="!isAuth.auth">Login</a></li>
             <li class="dropdown" ng-show="isAuth.auth">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{isAuth.username}} <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{isAuth.user.username}} <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="#">Logout</a></li>
+                <li ng-click = "logout()"><a href="#">Logout</a></li>
                 <li><a href="#">Another action</a></li>
                 <li><a href="#">Something else here</a></li>
                 <li role="separator" class="divider"></li>
@@ -56,54 +57,45 @@
       </div>
     </nav>
 <!- the explore section here -->
-<div class="jumbotron">
-  <ul class="nav nav-pills" id = "">
-    <li role="presentation"><a href="#">Home</a></li>
-    <li role="presentation" class="active"><a href="#">Profile</a></li>
-    <li role="presentation"><a href="#">Messages</a></li>
-    <li ><span class="glyphicon glyphicon-search" aria-hidden="true"></span></li>
-    <li><input type="text" class="form-control"  placeholder="search" ng-model = "vm.userlogin"></li>
-  </ul>
-  <div class="media" ng-repeat = "mc in mcs">
-    <div class="media-left">
-      <div id="circle"><span class="glyphicon glyphicon-ok"></span></div>
-    </div>  
-    <div class="media-left">
-      <div id = "medialeftparent">{{mc.popularity.like}}<div>LIKE</div></div>
-    </div>
-    <div class="media-left">
-      <div id = "medialeft">{{mc.popularity.comment}}<div>COMMENT</div></div>
-    </div>
-    <div class="media-left">
-      <div id = "medialeft">{{mc.popularity.view}}<div>VIEW</div></div>
-    </div>        
-    <div class="media-body">
-      <div id = "mediabody">
-        <h4 class="media-heading"><span>{{mc.title}}</span></h4>
-        <span class ="glyphicon glyphicon-tag"></span>
-        <div id = "tag" ng-repeat = "tag in mc.tags">{{tag}}</div>
+  <div class="jumbotron" ng-show="fistShow">
+    <ul class="nav nav-pills" >
+      <li role="presentation" ng-class = "time" ng-click = "changeClass('modify')" value="modify"><a href="#">Modify Time</a></li>
+      <li role="presentation" ng-class = "tag" ng-click = "changeClass('tag')" ><a href="#">Tag</a></li>
+      <li role="presentation" ng-class = "username" ng-click = "changeClass('username')" ><a href="#">User Name</a></li>
+      <li ><span class="glyphicon glyphicon-search" aria-hidden="true"></span></li>
+      <li><input type="text" class="form-control"  placeholder="search" ng-model = "userSearch" ng-change = "search()"></li>
+      <li><input type="button" name="CSV" value="CSV" ng-show="exportMc.length > 0" ng-click = "downLoadFile()" download="mcfile.csv"></li>
+    </ul>
+    <div class="media" ng-repeat = "mc in filteredTodos ">
+      <div class="media-left">
+        <div id="circle" ng-click = "addMcToExport(mc); onSelected = !onSelected" ng-class = "{circleClick: onSelected == true}" ng-init="onSelected = false"><span class="glyphicon glyphicon-ok"></span></div>
+      </div>  
+      <div class="media-left">
+        <div id = "medialeftparent">{{mc.popularity.like}}<div>LIKE</div></div>
       </div>
-    </div> 
+      <div class="media-left">
+        <div id = "medialeft">{{mc.popularity.comment}}<div>COMMENT</div></div>
+      </div>
+      <div class="media-left">
+        <div id = "medialeft">{{mc.popularity.view}}<div>VIEW</div></div>
+      </div>        
+      <div class="media-body">
+        <div id = "mediabody">
+          <h4 class="media-heading"><span ><a href = "/mcDetail/{{$index}}" ng-click = "storeMc($index)">{{mc.title}}</a></span></h4>
+          <span>Username: {{mc.ownername}}</span>
+          <span class ="glyphicon glyphicon-tag"></span>
+          <div id = "tag" ng-repeat = "tag in mc.tags">{{tag}}</div>
+        </div>
+      </div> 
+    </div>
   </div>
-</div>
+   <ul uib-pagination total-items="mcs.length" ng-model="currentPage" items-per-page = "numPerPage" ng-show="fistShow"></ul>
+
 <div class = "container">
   <div ng-view> </div>
 </div>
 
-<div id="input">
-  <input type="number" id="num" value="0" ng-model="input"><br>
-  <button id="push" ng-click="push()">Push</button> (Append the number in the above textfield to the end (bottom) of the list)<br>
-  <button id="pop" ng-click="pop()">Pop</button> (Remove the first (topmost) item, if any, from the list)
-</div>
 
-<!-- Sample view of a list containing 7 numbers: 1234, 4567, -50, 1, -21, 0.
-  In your solution, you should use JavaScript to generate this list dynamically.
- -->
-<div id=output>
-<ul>
-    <li ng-repeat="x in list track by $index" class={{x.type}}>{{x.num}}<li>
-</ul>
-</div>
 
 </body>
 </html>
